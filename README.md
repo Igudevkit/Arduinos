@@ -9,9 +9,11 @@ Aqui estão reunidos meus projetos e experimentos usando **Arduino**, **ESP** e 
 
 Cada projeto está organizado em sua própria pasta, contendo código e arquivos de apoio (esquemáticos, imagens, etc.).
 
-├── Monitoramento/   → Projeto de monitoramento (ex.: sensores de porta ou controladores de acesso por contato seco)
-├── Relógio/         → Projeto de relógio digital / RTC
-└── ...              → Novos projetos adicionados futuramente
+Monitoramento/   → Projeto de monitoramento (ex.: sensores de porta ou controladores de acesso por contato seco)
+
+Relógio/         → Projeto de relógio digital / RTC
+
+→ Novos projetos adicionados futuramente
 
 >  Cada pasta terá seu **README.md específico** explicando os detalhes, hardware usado e como rodar.
 
