@@ -1,5 +1,5 @@
-regio em arduino
-  Relógio ESP32-S2 SuperMini com:
+Relógio ESP32-S2 SuperMini com
+
   - Display OLED SSD1306 (I2C)
   - RTC DS3231
   - Sincronização NTP via WiFi
