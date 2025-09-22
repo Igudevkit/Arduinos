@@ -34,7 +34,11 @@
 #define SLEEP_PIN 6 // Botão deep sleep
 
 // Vibra call
-#define VIBRA_PIN 10 // URGENTE precisamos definir o 10 como pwm
+// -------------------- Vibra Call --------------------
+#define VIBRA_PIN 10 // GPIO10
+#define PWM_CHANNEL 0   // Canal PWM (0–15)
+#define PWM_FREQ 2000   // Frequência em Hz (2 kHz está ótimo pro vibra call)
+#define PWM_RESOLUTION 8 // Resolução (8 bits -> 0-255 duty cycle)
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 RTC_DS3231 rtc;
@@ -68,8 +72,10 @@ bool sleepPressed = false;
 void setup() {
   Serial.begin(115200);
 
-  pinMode(VIBRA_PIN, OUTPUT);  // URGENTE precisamos definir o 10 como pwm
-  digitalWrite(VIBRA_PIN, LOW);  // URGENTE precisamos definir o 10 como pwm
+  // Configura PWM no pino do vibra call
+  ledcSetup(PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
+  ledcAttachPin(VIBRA_PIN, PWM_CHANNEL);
+  ledcWrite(PWM_CHANNEL, 0); // começa desligado
 
   pinMode(MODE_PIN, INPUT_PULLUP);
   pinMode(SET_PIN, INPUT_PULLUP);
@@ -176,11 +182,12 @@ void loop() {
   }
 
   // ---------- Verifica Alarme ----------
-  if (alarmeAtivo && now.hour() == alarmeHora && now.minute() == alarmeMinuto && now.second() == 0) {
-    digitalWrite(VIBRA_PIN, HIGH);
-  } else {
-    digitalWrite(VIBRA_PIN, LOW);
-  }
+if (alarmeAtivo && now.hour() == alarmeHora && now.minute() == alarmeMinuto && now.second() == 0) {
+  ledcWrite(PWM_CHANNEL, 180); // vibra forte (0–255)
+} else {
+  ledcWrite(PWM_CHANNEL, 0);   // desligado
+}
+
 
   // ---------- Atualiza Display ----------
   display.clearDisplay();
